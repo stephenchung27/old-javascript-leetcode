@@ -27,7 +27,7 @@ var addTwoNumbers = function (l1, l2, carry = 0) {
     node.next = addTwoNumbers(next1, next2, sum >= 10 ? 1 : 0);
   } else if (carry > 0) {
     node = new ListNode(1);
-    node.next = null;
+    node.next = nul
   }
 
   return node
