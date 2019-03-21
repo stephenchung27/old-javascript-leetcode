@@ -12,13 +12,13 @@ class Queue {
   }
 
   enqueue(val) {
-    if(this.sentinel.next) {
+    if (this.sentinel.next) {
       const node = new Node(val);
 
       this.sentinel.next.previous = node;
       node.next = this.sentinel.next;
       node.previous = this.sentinel;
-      this.sentinel.next = node; 
+      this.sentinel.next = node;
     } else {
       this.sentinel.next = new Node(val);
       this.sentinel.previous = this.sentinel.next;
@@ -34,6 +34,10 @@ class Queue {
     node.previous.next = this.sentinel;
 
     return node.val;
+  }
+
+  empty() {
+    return Boolean(this.sentinel.previous);
   }
 }
 

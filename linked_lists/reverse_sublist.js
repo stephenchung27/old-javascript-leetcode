@@ -10,13 +10,13 @@ const reverse_sublist = (list, s, f) => {
   dummy.next = list;
   let head = dummy.next;
 
-  for(let i = 1; i < s; i++) {
+  for (let i = 1; i < s; i++) {
     head = head.next;
   }
 
   let curr = head.next;
 
-  for(let i = 1; i <= f - s; i++) {
+  for (let i = 1; i <= f - s; i++) {
     const temp = curr.next;
 
     curr.next = temp.next; // curr.next = curr.next.next
