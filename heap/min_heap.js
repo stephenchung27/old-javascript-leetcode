@@ -12,6 +12,7 @@ class Node {
 class MinHeap {
   constructor() {
     this.head = new Node();
+    this.array = [];
   }
 
   breadthFirstSearch(val, node = this.head) {
@@ -44,7 +45,7 @@ class MinHeap {
     return rightSearch;
   }
 
-  peek() {
+  getMin() {
     return this.head.val;
   }
 
