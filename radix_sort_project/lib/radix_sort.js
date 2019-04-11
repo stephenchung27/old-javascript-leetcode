@@ -17,7 +17,7 @@ const getMaxDigits = (nums) => {
 }
 
 function radixSort(arr) {
-  if (!(arr instanceof Array)) return null;
+  if (!arr instanceof Array) return null;
   if (arr.length === 0) return [];
   if (arr.length === 1) return arr;
 
