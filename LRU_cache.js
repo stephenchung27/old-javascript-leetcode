@@ -7,7 +7,7 @@ class LinkedListNode {
 }
 
 class LinkedList {
-  constructor(capacity) {
+  constructor() {
     this.head = new LinkedListNode();
     this.tail = new LinkedListNode();
 
@@ -44,12 +44,19 @@ class LRUCache {
   }
 
   put(key, value) {
-    this.map[key] = this.linkedList.insert(value);
-    this.size++;
+    if (this.map[key]) {
+      this.map[key].value = value;
+      this.get(key);
+    } else {
+      this.map[key] = this.linkedList.insert(value);
+      this.size++;
 
-    if (this.capacity < this.size) {
-      delete this.map[this.linkedList.tail.previous];
-      this.linkedList.delete();
+      if (this.capacity < this.size) {
+        delete this.map[this.linkedList.tail.previous.value];
+        this.linkedList.delete();
+
+        this.size--;
+      }
     }
   }
 
