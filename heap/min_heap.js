@@ -1,55 +1,69 @@
-const Queue = require('../queue/linked_list_queue');
-
-class Node {
-  constructor(val) {
-    this.val = val;
-    this.left = null;
-    this.right = null;
-    this.balanceFactor = null; // {-1, 0, 1}
-  }
-}
-
 class MinHeap {
   constructor() {
-    this.head = new Node();
-    this.array = [];
+    this.array = [null];
   }
 
-  breadthFirstSearch(val, node = this.head) {
-    const queue = new Queue();
-    const visited = new Set();
+  getParent(index) {
+    return Math.floor(index / 2);
+  }
 
-    queue.enqueue(node);
+  getLeftChild(index) {
+    return 2 * index;
+  }
 
-    while (!queue.empty()) {
-      const currentNode = queue.dequeue();
+  getRightChild(index) {
+    return 2 * index + 1;
+  }
 
-      if (currentNode.val === val) return currentNode;
+  insert(value) {
+    this.array.push(value);
 
-      if(currentNode.left) queue.enqueue(currentNode.left);
-      if(currentNode.right) queue.enqueue(currentNode.right);
+    this.siftUp(this.array.length - 1);
+  }
+
+  siftUp(index) {
+    if (index === 1) return;
+
+    const parentIndex = this.getParent(index);
+
+    if (this.array[parentIndex] > this.array[index]) {
+      [this.array[index], this.array[parentIndex]] = [this.array[parentIndex], this.array[index]];
+
+      this.siftUp(parentIndex);
+    }
+  }
+
+  extract() {
+    if (this.array.length === 1) return null;
+    if (this.array.length === 2) return this.array.pop();
+
+    const min = this.array[1];
+
+    this.array[1] = this.array.pop();
+    this.siftDown(1);
+
+    return min;
+  }
+
+  siftDown(index) {
+    const leftIndex = this.getLeftChild(index);
+    const rightIndex = this.getRightChild(index);
+
+    const leftValue = this.array[leftIndex] !== undefined ? this.array[leftIndex] : Infinity;
+    const rightValue = this.array[rightIndex] !== undefined ? this.array[rightIndex] : Infinity;
+
+    if (this.array[index] < leftValue && this.array[index] < rightValue) return;
+
+    let swapIndex;
+    
+    if (leftValue < rightValue) {
+      swapIndex = leftIndex;
+    } else {
+      swapIndex = rightIndex;
     }
 
-    return null;
+    [this.array[index], this.array[swapIndex]] = [this.array[swapIndex], this.array[index]];
+
+    this.siftDown(swapIndex);
   }
-
-  depthFirstSearch(val, node = this.head) {
-    if (node === null) return null;
-
-    if (node.val === val) return node;
-
-    const leftSearch = depthFirstSearch(val, node.left);
-    if (leftSearch) return leftSearch;
-
-    const rightSearch = depthFirstSearch(val, node.right);
-    return rightSearch;
-  }
-
-  getMin() {
-    return this.head.val;
-  }
-
-  
 }
-
-module.exports = MinHeap;
