@@ -1,4 +1,4 @@
-class MaxHeap {
+class MinHeap {
   constructor() {
     this.array = [null];
   }
@@ -26,40 +26,40 @@ class MaxHeap {
 
     const parentIndex = this.getParent(index);
 
-    if (this.array[parentIndex] < this.array[index]) {
-      [this.array[parentIndex], this.array[index]] = [this.array[index], this.array[parentIndex]];
+    if (this.array[parentIndex] > this.array[index]) {
+      [this.array[index], this.array[parentIndex]] = [this.array[parentIndex], this.array[index]];
 
       this.siftUp(parentIndex);
     }
   }
 
-  deleteMax() {
-    if (this.array.length === 2) return this.array.pop();
+  extract() {
     if (this.array.length === 1) return null;
+    if (this.array.length === 2) return this.array.pop();
 
-    const max = this.array[1];
+    const min = this.array[1];
+
     this.array[1] = this.array.pop();
-
     this.siftDown(1);
 
-    return max;
+    return min;
   }
 
   siftDown(index) {
     const leftIndex = this.getLeftChild(index);
     const rightIndex = this.getRightChild(index);
 
-    let leftValue = this.array[leftIndex] !== undefined ? this.array[leftIndex] : -Infinity;
-    let rightValue = this.array[rightIndex] !== undefined ? this.array[rightIndex] : -Infinity;
+    const leftValue = this.array[leftIndex] !== undefined ? this.array[leftIndex] : Infinity;
+    const rightValue = this.array[rightIndex] !== undefined ? this.array[rightIndex] : Infinity;
 
-    if (this.array[index] > leftValue && this.array[index] > rightValue) return;
+    if (this.array[index] < leftValue && this.array[index] < rightValue) return;
 
     let swapIndex;
-
+    
     if (leftValue < rightValue) {
-      swapIndex = rightIndex;
-    } else {
       swapIndex = leftIndex;
+    } else {
+      swapIndex = rightIndex;
     }
 
     [this.array[index], this.array[swapIndex]] = [this.array[swapIndex], this.array[index]];
@@ -67,7 +67,3 @@ class MaxHeap {
     this.siftDown(swapIndex);
   }
 }
-
-module.exports = {
-  MaxHeap
-};
