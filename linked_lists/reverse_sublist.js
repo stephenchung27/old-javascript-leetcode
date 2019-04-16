@@ -14,11 +14,11 @@ const reverse_sublist = (list, s, f) => {
     head = head.next;
   }
 
+  let previous = head;
   let curr = head.next;
 
   for (let i = 1; i <= f - s; i++) {
     const temp = curr.next;
-
     curr.next = temp.next; // curr.next = curr.next.next
     temp.next = head.next;
     head.next = temp;

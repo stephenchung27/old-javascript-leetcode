@@ -1,41 +1,27 @@
-const reverse_linked_list = (node) => {
+// Iterative
+const reverseLinkedList = (head) => {
   let previous = null;
-  let current = node;
-  let following = node;
+  let current = head;
 
-  while(current !== null) {
-    following = following.next;
+  while (current !== null) {
+    const next = current.next;
     current.next = previous;
     previous = current;
-    current = following;
+    current = next;
   }
 
   return previous;
 }
 
-class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-  }
+// Recursive
+const reverseLinkedList = (head) => {
+  if (head === null) return null;
+
+  if (head.next === null) return head;
+
+  const newHead = reverseLinkedList(head.next);
+  head.next.next = head;
+  head.next = null;
+
+  return newHead;
 }
-
-const node1 = new Node(1);
-const node2 = new Node(2);
-const node3 = new Node(3);
-const node4 = new Node(4);
-const node5 = new Node(5);
-
-node1.next = node2;
-node2.next = node3;
-node3.next = node4;
-node4.next = node5;
-
-const printList = (node) => {
-  while(node) {
-    console.log(node.val);
-    node = node.next;
-  }
-}
-
-printList(reverse_linked_list(node1));
