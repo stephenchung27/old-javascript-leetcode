@@ -22,7 +22,6 @@ class RedBlackTree {
 
       if (node.red) return node;
       else if (node.right.red) {
-        if ()
       }
     }
   }
