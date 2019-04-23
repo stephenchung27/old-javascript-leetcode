@@ -1,44 +1,31 @@
-/*
-  Write a program which takes an n x n 2D array.
-  It returns the spiral ordering of the array.
-*/
+function spiralOrder(matrix) {
+  const answer = [];
 
-/* 
-  1. Create an arrray that is nxn that is filled with true
-  2. Every cell you iterate through you flip it to false
-  3. Once you hit an undefined/false (falsey) value switch directions
-*/
+  if (matrix.length === 0) return answer;
 
-const spiralize_array = (matrix) => {
-  const matrixCheck = new Array(matrix.length).map(() => (
-    new Array(matrix.length).fill(true)
-  ));
+  let r1 = 0;
+  let r2 = matrix.length - 1;
+  let c1 = 0;
+  let c2 = matrix[0].length - 1;
 
-  const spiralized = [];
+  while (r1 <= r2 && c1 <= c2) {
+    for (let c = c1; c <= c2; c++) answer.push(matrix[r1][c]);
+    for (let r = r1 + 1; r <= r2; r++) answer.push(matrix[r][c2]);
 
-  let row = 0;
-  let col = 0;
-  let rowInc = 0;
-  let colInc = 1;
-
-  while(spiralized.length < matrix.length * matrix.length) {
-    if(matrixCheck[row][col]) {
-      spiralized.push(matrix[row][col])
-    } else {
-      if (rowInc === 0 && colInc === 1) {
-        rowInc = 1; colInc = 0;
-      } else if (rowInc === 1 && colInc === 0) {
-        rowInc = -1; colInc = 0;
-      } else if (rowInc === 0 && colInc === -1) {
-        rowInc = 0; colInc = -1;
-      } else {
-        rowInc = 0; colInc = 1;
-      }
+    if (r1 < r2 && c1 < c2) {
+      for (let c = c2 - 1; c >= c1; c--) answer.push(matrix[r2][c]);
+      for (let r = r2 - 1; r >= r1 + 1; r--) answer.push(matrix[r][c1]);
     }
-    
-    row += rowInc;
-    col += colInc;
+
+    r1++;
+    r2--;
+    c1++;
+    c2--;
   }
-  
-  return spiralized;
+
+  return answer;
 }
+
+const matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]];
+
+console.log(spiralOrder(matrix));
