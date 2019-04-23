@@ -6,8 +6,8 @@ class Node {
 }
 
 function reverse(head) {
-  this.prev = null;
-  this.current = head;
+  let prev = null;
+  let current = head;
 
   while (current !== null) {
     const next = current.next;
